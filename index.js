@@ -23,8 +23,9 @@ function Proto (cons, opts) {
     self.callbacks = { local : [], remote : [] };
     self.wrap = opts.wrap;
     self.unwrap = opts.unwrap;
-    
-    self.scrubber = scrubber(self.callbacks.local);
+
+    var ctor = opts.scrubber || scrubber;
+    self.scrubber = new ctor(self.callbacks.local);
     
     if (typeof cons === 'function') {
         self.instance = new cons(self.remote, self);
